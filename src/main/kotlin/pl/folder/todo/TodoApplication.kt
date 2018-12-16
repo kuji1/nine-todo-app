@@ -7,6 +7,6 @@ import org.springframework.boot.runApplication
 class TodoApplication
 
 fun main(args: Array<String>) {
-	runApplication<TodoApplication>(*args)
+    runApplication<TodoApplication>(*args)
 }
 
