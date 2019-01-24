@@ -1,4 +1,4 @@
-package pl.folder.todo
+package pl.ninthfolder.todo
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
