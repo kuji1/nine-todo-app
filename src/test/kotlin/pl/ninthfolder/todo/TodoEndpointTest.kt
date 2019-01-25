@@ -1,25 +1,20 @@
 package pl.ninthfolder.todo
 
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import pl.ninthfolder.todo.api.dto.TodoRequest
 import pl.ninthfolder.todo.domain.todo.Todo
 import pl.ninthfolder.todo.domain.todo.TodoStatus.NEW
 import java.time.Instant
 
-@ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment= WebEnvironment.RANDOM_PORT)
 class TodoEndpointTest(
-	@Autowired val testRestTemplate: TestRestTemplate,
-	@Autowired val mongoTemplate: MongoTemplate
+	@Autowired val testRestTemplate: TestRestTemplate
 ) {
 
 	@Test
