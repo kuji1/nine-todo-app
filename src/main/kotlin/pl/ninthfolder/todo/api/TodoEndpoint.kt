@@ -1,4 +1,4 @@
-package pl.folder.todo.api
+package pl.ninthfolder.todo.api
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import pl.folder.todo.api.dto.TodoRequest
-import pl.folder.todo.domain.todo.Todo
-import pl.folder.todo.domain.todo.TodoStatus
+import pl.ninthfolder.todo.api.dto.TodoRequest
+import pl.ninthfolder.todo.application.TodoService
+import pl.ninthfolder.todo.domain.todo.Todo
+import pl.ninthfolder.todo.domain.todo.TodoStatus
 import java.time.Instant
 
 @RestController("/api/todo")
-class TodoEndpoint {
+class TodoEndpoint(val todoService: TodoService) {
 
     @PostMapping(consumes = ["application/json"])
     @ResponseStatus(OK)
     fun createTodo(@RequestBody todoRequest: TodoRequest): ResponseEntity<Unit> {
-        val todo = todoRequest.createTodo()
-        logger.info("Todo $todo created")
+        todoService.createTodo(todoRequest)
         return ResponseEntity.ok().build()
     }
 
@@ -38,12 +38,4 @@ class TodoEndpoint {
     companion object {
         val logger: Logger = LoggerFactory.getLogger(TodoEndpoint::class.java)
     }
-
-    fun TodoRequest.createTodo(): Todo =
-        Todo(
-            this.content,
-            TodoStatus.NEW,
-            Instant.now(),
-            Instant.now()
-        )
 }

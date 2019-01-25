@@ -1,4 +1,4 @@
-package pl.folder.todo.domain.todo
+package pl.ninthfolder.todo.domain.todo
 
 enum class TodoStatus {
 
