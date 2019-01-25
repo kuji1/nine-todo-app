@@ -41,11 +41,14 @@ class TodoEndpointTest(
 	}
 
 	@Test
-	fun shouldGetTodos() {
+	fun shouldGetAllTodos() {
 		//given
 		val todo1 = Todo("test 1", NEW, Instant.now(), Instant.now())
 		val todo2 = Todo("test 1", NEW, Instant.now(), Instant.now())
 		val todo3 = Todo("test 1", NEW, Instant.now(), Instant.now())
+		todoDocumentDao.save(todo1)
+		todoDocumentDao.save(todo2)
+		todoDocumentDao.save(todo3)
 
 		//when
 		val response = testRestTemplate.getForObject(

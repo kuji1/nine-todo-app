@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController
 import pl.ninthfolder.todo.api.dto.TodoRequest
 import pl.ninthfolder.todo.application.TodoService
 import pl.ninthfolder.todo.domain.todo.Todo
-import pl.ninthfolder.todo.domain.todo.TodoStatus
-import java.time.Instant
 
 @RestController("/api/todo")
 class TodoEndpoint(val todoService: TodoService) {
@@ -29,10 +27,7 @@ class TodoEndpoint(val todoService: TodoService) {
     @GetMapping(produces = ["application/json"])
     @ResponseBody
     fun getTodos(): ResponseEntity<List<Todo>> {
-        val todo1 = Todo("test 1", TodoStatus.NEW, Instant.now(), Instant.now())
-        val todo2 = Todo("test 1", TodoStatus.NEW, Instant.now(), Instant.now())
-        val todo3 = Todo("test 1", TodoStatus.NEW, Instant.now(), Instant.now())
-        return ResponseEntity.ok(listOf(todo1, todo2, todo3))
+        return ResponseEntity.ok(todoService.getTodos())
     }
 
     companion object {
