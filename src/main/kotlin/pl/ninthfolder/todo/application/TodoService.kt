@@ -14,8 +14,8 @@ import java.time.Instant
 class TodoService(val todoRepository: TodoRepository) {
 
     fun createTodo(todoRequest: TodoRequest) {
-        todoRepository.save(todoRequest.createTodo())
         logger.info("Todo created")
+        todoRepository.save(todoRequest.createTodo())
     }
 
     fun TodoRequest.createTodo(): Todo =
@@ -25,6 +25,10 @@ class TodoService(val todoRepository: TodoRepository) {
             Instant.now(),
             Instant.now()
         )
+
+    fun getTodos(): List<Todo> {
+        return todoRepository.findAll()
+    }
 
     companion object {
         val logger: Logger = LoggerFactory.getLogger(TodoEndpoint::class.java)
