@@ -26,8 +26,12 @@ class TodoService(val todoRepository: TodoRepository) {
             Instant.now()
         )
 
-    fun getTodos(): List<Todo> {
+    fun getAllTodos(): List<Todo> {
         return todoRepository.findAll()
+    }
+
+    fun getTodoById(todoId: String): Todo {
+        return todoRepository.findById(todoId)
     }
 
     companion object {
