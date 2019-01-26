@@ -1,5 +1,6 @@
 package pl.ninthfolder.todo
 
+import org.bson.types.ObjectId
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -62,6 +63,29 @@ class TodoEndpointTest(
 
 		//then
 		assert(response.size == 3)
+	}
+
+	@Test
+	fun shouldGetTodoById() {
+		//given
+		val objectId1 = ObjectId.get().toString()
+		val objectId2 = ObjectId.get().toString()
+		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "test 1", NEW, Instant.now(), Instant.now())
+		todoDocumentDao.save(todo1)
+		todoDocumentDao.save(todo2)
+
+		//when
+		val response = testRestTemplate.getForObject(
+			"/api/todo/$objectId1",
+			Todo::class.java
+		)
+
+		//then
+		assert(response.content == todo1.content)
+		assert(response.status == todo1.status)
+		assert(response.createdOn == todo1.createdOn)
+		assert(response.modifiedOn == todo1.modifiedOn)
 	}
 
 }

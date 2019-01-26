@@ -10,4 +10,6 @@ class TodoStorage(val todoDocumentDao: TodoDocumentDao) : TodoRepository {
     override fun save(todo: Todo) = todoDocumentDao.save(todo)
 
     override fun findAll(): List<Todo> = todoDocumentDao.findAll()
+
+    override fun findById(todoId: String): Todo = todoDocumentDao.findById(todoId).get()
 }
