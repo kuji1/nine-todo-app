@@ -4,7 +4,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import pl.ninthfolder.todo.api.TodoEndpoint
-import pl.ninthfolder.todo.api.dto.TodoRequest
+import pl.ninthfolder.todo.application.dto.NewTodo
+import pl.ninthfolder.todo.application.dto.UpdatedTodo
 import pl.ninthfolder.todo.domain.todo.Todo
 import pl.ninthfolder.todo.domain.todo.TodoRepository
 import pl.ninthfolder.todo.domain.todo.TodoStatus.NEW
@@ -13,12 +14,12 @@ import java.time.Instant
 @Service
 class TodoService(val todoRepository: TodoRepository) {
 
-    fun createTodo(todoRequest: TodoRequest) {
+    fun createTodo(todoRequest: NewTodo) {
         logger.info("Todo created")
         todoRepository.save(todoRequest.createTodo())
     }
 
-    fun TodoRequest.createTodo(): Todo =
+    fun NewTodo.createTodo(): Todo =
         Todo(
             this.content,
             NEW,
@@ -32,6 +33,13 @@ class TodoService(val todoRepository: TodoRepository) {
 
     fun getTodoById(todoId: String): Todo {
         return todoRepository.findById(todoId)
+    }
+
+    fun updateTodo(todoId: String, updatedTodo: UpdatedTodo) {
+        val todo = todoRepository.findById(todoId)
+        todo.content = updatedTodo.content
+        todo.status = updatedTodo.status
+        todoRepository.save(todo)
     }
 
     companion object {
