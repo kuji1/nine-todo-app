@@ -31,7 +31,7 @@ class TodoService(val todoRepository: TodoRepository) {
         return todoRepository.findAll()
     }
 
-    fun getTodoById(todoId: String): Todo {
+    fun getTodo(todoId: String): Todo {
         return todoRepository.findById(todoId)
     }
 
@@ -40,6 +40,10 @@ class TodoService(val todoRepository: TodoRepository) {
         todo.content = updatedTodo.content
         todo.status = updatedTodo.status
         todoRepository.save(todo)
+    }
+
+    fun deleteTodo(todoId: String) {
+        todoRepository.deleteById(todoId)
     }
 
     companion object {

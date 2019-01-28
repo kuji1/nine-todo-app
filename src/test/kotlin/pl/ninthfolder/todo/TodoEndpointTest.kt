@@ -50,12 +50,12 @@ class TodoEndpointTest(
 	@Test
 	fun shouldGetAllTodos() {
 		//given
-		val todo1 = Todo("test 1", NEW, Instant.now(), Instant.now())
-		val todo2 = Todo("test 1", NEW, Instant.now(), Instant.now())
-		val todo3 = Todo("test 1", NEW, Instant.now(), Instant.now())
+		val objectId1 = ObjectId.get().toString()
+		val objectId2 = ObjectId.get().toString()
+		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "test 2", NEW, Instant.now(), Instant.now())
 		todoDocumentDao.save(todo1)
 		todoDocumentDao.save(todo2)
-		todoDocumentDao.save(todo3)
 
 		//when
 		val response = testRestTemplate.getForObject(
@@ -64,7 +64,7 @@ class TodoEndpointTest(
 		)
 
 		//then
-		assert(response.size == 3)
+		assert(response.size == 2)
 	}
 
 	@Test
@@ -108,6 +108,27 @@ class TodoEndpointTest(
 		val updatedTodo = todoDocumentDao.findById(objectId).get()
 		assert(updatedTodo.content == "update")
 		assert(updatedTodo.status == IN_PROGRESS)
+	}
+
+	@Test
+	fun shouldDeleteTodo() {
+		//given
+		val objectId1 = ObjectId.get().toString()
+		val objectId2 = ObjectId.get().toString()
+		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "test 2", NEW, Instant.now(), Instant.now())
+		todoDocumentDao.save(todo1)
+		todoDocumentDao.save(todo2)
+
+		//when
+		testRestTemplate.delete(
+			"/api/todo/$objectId1"
+		)
+
+		//then
+		assert(todoDocumentDao.count() == 1L)
+		assert(!todoDocumentDao.findById(objectId1).isPresent)
+		assert(todoDocumentDao.findById(objectId2).isPresent)
 	}
 
 }
