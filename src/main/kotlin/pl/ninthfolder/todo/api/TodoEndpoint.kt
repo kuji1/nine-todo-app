@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -38,14 +39,21 @@ class TodoEndpoint(val todoService: TodoService) {
     @GetMapping(produces = ["application/json"], path = ["/{todoId}"])
     @ResponseBody
     @ResponseStatus(OK)
-    fun getTodoById(@PathVariable todoId: String): ResponseEntity<Todo> {
-        return ResponseEntity.ok(todoService.getTodoById(todoId))
+    fun getTodo(@PathVariable todoId: String): ResponseEntity<Todo> {
+        return ResponseEntity.ok(todoService.getTodo(todoId))
     }
 
     @PutMapping(consumes = ["application/json"], path = ["/{todoId}"])
     @ResponseStatus(NO_CONTENT)
-    fun updateTodoById(@PathVariable todoId: String, @RequestBody updatedTodo: UpdatedTodo): ResponseEntity<Todo> {
+    fun updateTodo(@PathVariable todoId: String, @RequestBody updatedTodo: UpdatedTodo): ResponseEntity<Unit> {
         todoService.updateTodo(todoId, updatedTodo)
+        return ResponseEntity.noContent().build()
+    }
+
+    @DeleteMapping(path = ["/{todoId}"])
+    @ResponseStatus(NO_CONTENT)
+    fun deleteTodo(@PathVariable todoId: String): ResponseEntity<Unit> {
+        todoService.deleteTodo(todoId)
         return ResponseEntity.noContent().build()
     }
 
