@@ -21,20 +21,20 @@ import pl.ninthfolder.todo.application.dto.UpdatedTodo
 import pl.ninthfolder.todo.domain.todo.Todo
 
 @RestController
-@RequestMapping("/api/todo")
+@RequestMapping("/api/todos")
 class TodoEndpoint(val todoService: TodoService) {
-
-    @PostMapping(consumes = ["application/json"])
-    @ResponseStatus(OK)
-    fun createTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit> {
-        todoService.createTodo(todoRequest)
-        return ResponseEntity.ok().build() // TODO - change status to created and return location for getting specific todo
-    }
 
     @GetMapping(produces = ["application/json"])
     @ResponseBody
     @ResponseStatus(OK)
-    fun getTodos(): ResponseEntity<List<Todo>> = ResponseEntity.ok(todoService.getAllTodos())
+    fun getAllTodos(): ResponseEntity<List<Todo>> = ResponseEntity.ok(todoService.getAllTodos())
+
+    @PostMapping(consumes = ["application/json"])
+    @ResponseStatus(OK)
+    fun createNewTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit> {
+        todoService.createTodo(todoRequest)
+        return ResponseEntity.ok().build() // TODO - change status to created and return location for getting specific todo
+    }
 
     @GetMapping(produces = ["application/json"], path = ["/{todoId}"])
     @ResponseBody
