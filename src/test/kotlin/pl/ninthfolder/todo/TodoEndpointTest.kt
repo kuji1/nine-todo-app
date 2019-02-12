@@ -23,6 +23,8 @@ class TodoEndpointTest(
 	@Autowired val todoDocumentDao: TodoDocumentDao
 ) {
 
+    private val TODO_PATH = "/api/todos"
+
 	@BeforeEach
 	fun beforeEach() {
 		todoDocumentDao.deleteAll()
@@ -37,7 +39,7 @@ class TodoEndpointTest(
 
 		//when
 		val response = testRestTemplate.postForEntity(
-			"/api/todo",
+            TODO_PATH,
 			todoRequest,
 			ResponseEntity::class.java
 		)
@@ -59,7 +61,7 @@ class TodoEndpointTest(
 
 		//when
 		val response = testRestTemplate.getForObject(
-			"/api/todo",
+            TODO_PATH,
 			List::class.java
 		)
 
@@ -79,7 +81,7 @@ class TodoEndpointTest(
 
 		//when
 		val response = testRestTemplate.getForObject(
-			"/api/todo/$objectId1",
+			"$TODO_PATH/$objectId1",
 			Todo::class.java
 		)
 
@@ -101,7 +103,7 @@ class TodoEndpointTest(
 
 		//when
 		testRestTemplate.put(
-			"/api/todo/$objectId",
+			"$TODO_PATH/$objectId",
 			update)
 
 		//then
@@ -122,7 +124,7 @@ class TodoEndpointTest(
 
 		//when
 		testRestTemplate.delete(
-			"/api/todo/$objectId1"
+			"$TODO_PATH/$objectId1"
 		)
 
 		//then
