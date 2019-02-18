@@ -2,8 +2,7 @@ package pl.ninthfolder.todo.api
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpStatus.NO_CONTENT
-import org.springframework.http.HttpStatus.OK
+import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,6 +18,7 @@ import pl.ninthfolder.todo.application.dto.NewTodo
 import pl.ninthfolder.todo.application.TodoService
 import pl.ninthfolder.todo.application.dto.UpdatedTodo
 import pl.ninthfolder.todo.domain.todo.Todo
+import java.net.URI
 
 @RestController
 @RequestMapping("/api/todos")
@@ -30,10 +30,10 @@ class TodoEndpoint(val todoService: TodoService) {
     fun getAllTodos(): ResponseEntity<List<Todo>> = ResponseEntity.ok(todoService.getAllTodos())
 
     @PostMapping(consumes = ["application/json"])
-    @ResponseStatus(OK)
+    @ResponseStatus(CREATED)
     fun createNewTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit> {
-        todoService.createTodo(todoRequest)
-        return ResponseEntity.ok().build() // TODO - change status to created and return location for getting specific todo
+        val todo = todoService.createTodo(todoRequest)
+        return ResponseEntity.created(URI.create("/api/todos/${todo.id}")).build()
     }
 
     @GetMapping(produces = ["application/json"], path = ["/{todoId}"])
