@@ -14,12 +14,9 @@ import java.time.Instant
 @Service
 class TodoService(val todoRepository: TodoRepository) {
 
-    fun createTodo(todoRequest: NewTodo) {
-        logger.info("Todo created")
-        todoRepository.save(todoRequest.createTodo())
-    }
+    fun createTodo(todoRequest: NewTodo): Todo  = todoRepository.save(todoRequest.createNewTodo())
 
-    fun NewTodo.createTodo(): Todo =
+    fun NewTodo.createNewTodo(): Todo =
         Todo(
             this.content,
             NEW,

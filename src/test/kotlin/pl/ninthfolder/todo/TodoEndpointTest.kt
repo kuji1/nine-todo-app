@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import pl.ninthfolder.todo.application.dto.NewTodo
@@ -45,7 +46,7 @@ class TodoEndpointTest(
 		)
 
 		//then
-		assert(response.statusCode == OK)
+		assert(response.statusCode == CREATED)
 		assert(todoDocumentDao.count() == 1L)
 	}
 
