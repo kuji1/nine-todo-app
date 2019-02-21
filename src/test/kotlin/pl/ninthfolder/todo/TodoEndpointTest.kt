@@ -71,6 +71,26 @@ class TodoEndpointTest(
 	}
 
 	@Test
+	fun shouldGetAllTodosByStatus() {
+		//given
+		val objectId1 = ObjectId.get().toString()
+		val objectId2 = ObjectId.get().toString()
+		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "test 2", IN_PROGRESS, Instant.now(), Instant.now())
+		todoDocumentDao.save(todo1)
+		todoDocumentDao.save(todo2)
+
+		//when
+		val response = testRestTemplate.getForObject(
+				"$TODO_PATH?status=NEW",
+				List::class.java
+		)
+
+		//then
+		assert(response.size == 1)
+	}
+
+	@Test
 	fun shouldGetTodoById() {
 		//given
 		val objectId1 = ObjectId.get().toString()

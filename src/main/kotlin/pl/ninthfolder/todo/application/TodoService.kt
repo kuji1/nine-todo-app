@@ -24,8 +24,11 @@ class TodoService(val todoRepository: TodoRepository) {
             Instant.now()
         )
 
-    fun getAllTodos(): List<Todo> {
-        return todoRepository.findAll()
+    fun getAllTodos(status: String): List<Todo> {
+        if (status == "ALL") {
+            return todoRepository.findAll()
+        }
+        return todoRepository.findAllByStatus(status)
     }
 
     fun getTodo(todoId: String): Todo {
