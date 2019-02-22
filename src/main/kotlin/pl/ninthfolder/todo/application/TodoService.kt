@@ -18,6 +18,7 @@ class TodoService(val todoRepository: TodoRepository) {
 
     fun NewTodo.createNewTodo(): Todo =
         Todo(
+            this.title,
             this.content,
             NEW,
             Instant.now(),
@@ -37,6 +38,7 @@ class TodoService(val todoRepository: TodoRepository) {
 
     fun updateTodo(todoId: String, updatedTodo: UpdatedTodo) {
         val todo = todoRepository.findById(todoId)
+        todo.title = updatedTodo.title
         todo.content = updatedTodo.content
         todo.status = updatedTodo.status
         todoRepository.save(todo)
