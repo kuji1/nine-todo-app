@@ -9,14 +9,16 @@ import java.time.Instant
 @Document
 class Todo(
     @Id var id: String,
+    var title: String,
     var content: String,
     var status: TodoStatus,
     var createdOn: Instant,
     var modifiedOn: Instant
 ) {
     constructor(
-        content: String, status: TodoStatus, createdOn: Instant, modifiedOn: Instant
-    ) : this(ObjectId.get().toString(), "", NEW, Instant.now(), Instant.now()) {
+        title: String, content: String, status: TodoStatus, createdOn: Instant, modifiedOn: Instant
+    ) : this(ObjectId.get().toString(), "", "", NEW, Instant.now(), Instant.now()) {
+        this.title = title
         this.content = content
         this.status = status
         this.createdOn = createdOn

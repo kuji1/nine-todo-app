@@ -34,9 +34,7 @@ class TodoEndpointTest(
 	@Test
 	fun shouldReturnOkForProperTodoRequest() {
 		//given
-		val todoRequest = NewTodo(
-			"some todo"
-		)
+		val todoRequest = NewTodo("some title", "some todo")
 
 		//when
 		val response = testRestTemplate.postForEntity(
@@ -55,8 +53,8 @@ class TodoEndpointTest(
 		//given
 		val objectId1 = ObjectId.get().toString()
 		val objectId2 = ObjectId.get().toString()
-		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
-		val todo2 = Todo(objectId2, "test 2", NEW, Instant.now(), Instant.now())
+		val todo1 = Todo(objectId1, "title 1", "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "title 2","test 2", NEW, Instant.now(), Instant.now())
 		todoDocumentDao.save(todo1)
 		todoDocumentDao.save(todo2)
 
@@ -75,8 +73,8 @@ class TodoEndpointTest(
 		//given
 		val objectId1 = ObjectId.get().toString()
 		val objectId2 = ObjectId.get().toString()
-		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
-		val todo2 = Todo(objectId2, "test 2", IN_PROGRESS, Instant.now(), Instant.now())
+		val todo1 = Todo(objectId1, "title 1", "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "title 2", "test 2", IN_PROGRESS, Instant.now(), Instant.now())
 		todoDocumentDao.save(todo1)
 		todoDocumentDao.save(todo2)
 
@@ -95,8 +93,8 @@ class TodoEndpointTest(
 		//given
 		val objectId1 = ObjectId.get().toString()
 		val objectId2 = ObjectId.get().toString()
-		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
-		val todo2 = Todo(objectId2, "test 2", NEW, Instant.now(), Instant.now())
+		val todo1 = Todo(objectId1, "title 1", "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "title 2", "test 2", NEW, Instant.now(), Instant.now())
 		todoDocumentDao.save(todo1)
 		todoDocumentDao.save(todo2)
 
@@ -107,6 +105,7 @@ class TodoEndpointTest(
 		)
 
 		//then
+        assert(response.title == todo1.title)
 		assert(response.content == todo1.content)
 		assert(response.status == todo1.status)
 		assert(response.createdOn == todo1.createdOn)
@@ -117,10 +116,10 @@ class TodoEndpointTest(
 	fun shouldUpdateTodoStatus() {
 		//given
 		val objectId = ObjectId.get().toString()
-		val todo = Todo(objectId, "test", NEW, Instant.now(), Instant.now())
+		val todo = Todo(objectId, "title", "test", NEW, Instant.now(), Instant.now())
 		todoDocumentDao.save(todo)
 
-		val update = UpdatedTodo("update", IN_PROGRESS)
+		val update = UpdatedTodo("updated title", "update", IN_PROGRESS)
 
 		//when
 		testRestTemplate.put(
@@ -129,6 +128,7 @@ class TodoEndpointTest(
 
 		//then
 		val updatedTodo = todoDocumentDao.findById(objectId).get()
+        assert(updatedTodo.title == "updated title")
 		assert(updatedTodo.content == "update")
 		assert(updatedTodo.status == IN_PROGRESS)
 	}
@@ -138,8 +138,8 @@ class TodoEndpointTest(
 		//given
 		val objectId1 = ObjectId.get().toString()
 		val objectId2 = ObjectId.get().toString()
-		val todo1 = Todo(objectId1, "test 1", NEW, Instant.now(), Instant.now())
-		val todo2 = Todo(objectId2, "test 2", NEW, Instant.now(), Instant.now())
+		val todo1 = Todo(objectId1, "title 1", "test 1", NEW, Instant.now(), Instant.now())
+		val todo2 = Todo(objectId2, "title 2", "test 2", NEW, Instant.now(), Instant.now())
 		todoDocumentDao.save(todo1)
 		todoDocumentDao.save(todo2)
 
