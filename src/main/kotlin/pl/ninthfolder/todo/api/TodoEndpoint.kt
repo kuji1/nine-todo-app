@@ -15,25 +15,24 @@ import java.net.URI
 @RequestMapping("/api/todos")
 class TodoEndpoint(val todoService: TodoService) {
 
-    @GetMapping(produces = ["application/json"])
-    @ResponseBody
-    @ResponseStatus(OK)
-    fun getAllTodos(
-            @RequestParam(required = false, defaultValue = "ALL") status: String
-    ): ResponseEntity<List<Todo>> = ResponseEntity.ok(todoService.getAllTodos(status))
-
-    @PostMapping(consumes = ["application/json"])
-    @ResponseStatus(CREATED)
-    fun createNewTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit> {
-        val todo = todoService.createTodo(todoRequest)
-        return ResponseEntity.created(URI.create("/api/todos/${todo.id}")).build()
-    }
-
     @GetMapping(produces = ["application/json"], path = ["/{todoId}"])
     @ResponseBody
     @ResponseStatus(OK)
     fun getTodo(@PathVariable todoId: String): ResponseEntity<Todo> {
         return ResponseEntity.ok(todoService.getTodo(todoId))
+    }
+
+    @GetMapping(produces = ["application/json"])
+    @ResponseBody
+    @ResponseStatus(OK)
+    fun getTodos(@RequestParam(required = false, defaultValue = "ALL") status: String): ResponseEntity<List<Todo>> =
+            ResponseEntity.ok(todoService.getAllTodos(status))
+
+    @PostMapping(consumes = ["application/json"])
+    @ResponseStatus(CREATED)
+    fun createTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit> {
+        val todo = todoService.createTodo(todoRequest)
+        return ResponseEntity.created(URI.create("/api/todos/${todo.id}")).build()
     }
 
     @PutMapping(consumes = ["application/json"], path = ["/{todoId}"])

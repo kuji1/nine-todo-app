@@ -1,4 +1,4 @@
-package pl.ninthfolder.todo
+package pl.ninthfolder.todo.api
 
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.BeforeEach
@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import pl.ninthfolder.todo.application.dto.NewTodo
 import pl.ninthfolder.todo.application.dto.UpdatedTodo
