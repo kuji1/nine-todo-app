@@ -1,4 +1,4 @@
-package pl.ninthfolder.todo.api
+package pl.ninthfolder.todo.integration.api
 
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.BeforeEach
@@ -19,13 +19,15 @@ import pl.ninthfolder.todo.infrastructure.persistance.TodoDocumentDao
 import java.time.Instant
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
-class TodoEndpointTest(
+class TodoServiceTest(
 	@Autowired val testRestTemplate: TestRestTemplate,
 	@Autowired val todoDocumentDao: TodoDocumentDao
 ) {
 
-    private val TODO_PATH = "/api/todos"
-	private val NON_EXISTING_TODO_ID = "1q2w3e4r5t6y7u8i9o0p"
+	companion object {
+		const val TODO_PATH = "/api/todos"
+		const val NON_EXISTING_TODO_ID = "1q2w3e4r5t6y7u8i9o0p"
+	}
 
 	@BeforeEach
 	fun beforeEach() {
@@ -39,7 +41,7 @@ class TodoEndpointTest(
 
 		//when
 		val response = testRestTemplate.postForEntity(
-            TODO_PATH,
+				TODO_PATH,
 			todoRequest,
 			ResponseEntity::class.java
 		)
@@ -61,12 +63,24 @@ class TodoEndpointTest(
 
 		//when
 		val response = testRestTemplate.getForObject(
-            TODO_PATH,
+				TODO_PATH,
 			List::class.java
 		)
 
 		//then
 		assert(response.size == 2)
+	}
+
+	@Test
+	fun shouldReturnEmptyListIfThereAreNoTodos() {
+		//when
+		val response = testRestTemplate.getForObject(
+				TODO_PATH,
+				List::class.java
+		)
+
+		//then
+		assert(response.size == 0)
 	}
 
 	@Test
