@@ -23,7 +23,7 @@ interface TodoEndpoint {
 
     @PostMapping(consumes = ["application/json"])
     @ResponseStatus(HttpStatus.CREATED)
-    fun createTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit>
+    fun createTodo(@RequestBody newTodo: NewTodo): ResponseEntity<Unit>
 
     @PutMapping(consumes = ["application/json"], path = ["/{todoId}"])
     @ResponseStatus(HttpStatus.NO_CONTENT)

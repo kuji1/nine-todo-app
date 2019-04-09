@@ -31,25 +31,13 @@ class TodoService(
     }
 
     override fun getTodos(@RequestParam(required = false, defaultValue = "ALL") status: String): ResponseEntity<List<Todo>> {
-        if (status == "ALL") {
-            return ResponseEntity.ok(todoRepository.findAll())
-        }
         return ResponseEntity.ok(todoRepository.findAllByStatus(status))
     }
 
-    override fun createTodo(@RequestBody todoRequest: NewTodo): ResponseEntity<Unit> {
-        val todo = todoRepository.save(todoRequest.createNewTodo())
+    override fun createTodo(@RequestBody newTodo: NewTodo): ResponseEntity<Unit> {
+        val todo = todoRepository.save(Todo.fromNewTodo(newTodo))
         return ResponseEntity.created(URI.create("/api/todos/${todo.id}")).build()
     }
-
-    fun NewTodo.createNewTodo(): Todo =
-            Todo(
-                    this.title,
-                    this.content,
-                    TodoStatus.NEW,
-                    Instant.now(),
-                    Instant.now()
-            )
 
     override fun updateTodo(@PathVariable todoId: String, @RequestBody updatedTodo: UpdatedTodo): ResponseEntity<Unit> {
         val todo = todoRepository.findById(todoId)
