@@ -3,6 +3,7 @@ package pl.ninthfolder.todo.domain.todo
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import pl.ninthfolder.todo.application.dto.NewTodo
 import pl.ninthfolder.todo.domain.todo.TodoStatus.NEW
 import java.time.Instant
 
@@ -24,4 +25,16 @@ class Todo(
         this.createdOn = createdOn
         this.modifiedOn = modifiedOn
     }
+
+    companion object {
+        fun fromNewTodo(newTodo: NewTodo): Todo =
+                Todo(
+                        newTodo.title,
+                        newTodo.content,
+                        NEW,
+                        Instant.now(),
+                        Instant.now()
+                )
+    }
+
 }
