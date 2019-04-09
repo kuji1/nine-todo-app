@@ -158,6 +158,8 @@ class TodoServiceTest(
         assert(updatedTodo.title == "updated title")
 		assert(updatedTodo.content == "update")
 		assert(updatedTodo.status == IN_PROGRESS)
+		assert(updatedTodo.createdOn == todo.createdOn)
+		assert(updatedTodo.modifiedOn != todo.modifiedOn)
 	}
 
 	@Test
