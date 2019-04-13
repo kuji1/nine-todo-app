@@ -1,4 +1,4 @@
-package pl.ninthfolder.todo.application.dto
+package pl.ninthfolder.todo.api.dto
 
 import com.fasterxml.jackson.annotation.JsonCreator
 

@@ -3,12 +3,12 @@ package pl.ninthfolder.todo.domain.todo
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import pl.ninthfolder.todo.application.dto.NewTodo
+import pl.ninthfolder.todo.api.dto.NewTodo
 import pl.ninthfolder.todo.domain.todo.TodoStatus.NEW
 import java.time.Instant
 
 @Document
-class Todo(
+data class Todo(
     @Id var id: String,
     var title: String,
     var content: String,

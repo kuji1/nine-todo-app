@@ -10,8 +10,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
-import pl.ninthfolder.todo.application.dto.NewTodo
-import pl.ninthfolder.todo.application.dto.UpdatedTodo
+import pl.ninthfolder.todo.api.dto.NewTodo
+import pl.ninthfolder.todo.api.dto.UpdatedTodo
 import pl.ninthfolder.todo.domain.todo.Todo
 import pl.ninthfolder.todo.domain.todo.TodoStatus.IN_PROGRESS
 import pl.ninthfolder.todo.domain.todo.TodoStatus.NEW

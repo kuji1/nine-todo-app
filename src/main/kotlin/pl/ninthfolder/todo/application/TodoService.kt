@@ -4,21 +4,21 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.server.ResponseStatusException
 import pl.ninthfolder.todo.api.TodoEndpoint
-import pl.ninthfolder.todo.application.dto.NewTodo
-import pl.ninthfolder.todo.application.dto.UpdatedTodo
+import pl.ninthfolder.todo.api.dto.NewTodo
+import pl.ninthfolder.todo.api.dto.UpdatedTodo
 import pl.ninthfolder.todo.domain.todo.Todo
 import pl.ninthfolder.todo.domain.todo.TodoRepository
 import pl.ninthfolder.todo.infrastructure.persistance.exception.TodoNotFoundException
 import java.net.URI
 import java.time.Instant
 
-@Component
+@Service
 class TodoService(
         val todoRepository: TodoRepository
 ): TodoEndpoint {

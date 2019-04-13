@@ -3,8 +3,8 @@ package pl.ninthfolder.todo.api
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import pl.ninthfolder.todo.application.dto.NewTodo
-import pl.ninthfolder.todo.application.dto.UpdatedTodo
+import pl.ninthfolder.todo.api.dto.NewTodo
+import pl.ninthfolder.todo.api.dto.UpdatedTodo
 import pl.ninthfolder.todo.domain.todo.Todo
 
 @RestController
