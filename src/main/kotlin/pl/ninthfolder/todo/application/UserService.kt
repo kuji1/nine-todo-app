@@ -26,7 +26,7 @@ class UserService(
                            newUser.email,
                            passwordHasher.hashPassword(newUser.password)
                    ))
-        } catch (dke: DuplicateKeyException) {
+        } catch (dke: DuplicateKeyException) { // TODO - throw exception in userRepository?
             throw ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Username/email already registered.", dke)
         }
         return ResponseEntity.created(URI.create("/api/todos/${user.id}")).build()
