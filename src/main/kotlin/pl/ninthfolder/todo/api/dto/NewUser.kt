@@ -1,9 +1,9 @@
 package pl.ninthfolder.todo.api.dto
 
-import com.fasterxml.jackson.annotation.JsonCreator
+import pl.ninthfolder.todo.api.validation.Username
 
-data class NewUser @JsonCreator constructor (
-        val username: String,
+data class NewUser constructor (
+        @field:Username val username: String,
         val email: String,
         val password: String
 )
