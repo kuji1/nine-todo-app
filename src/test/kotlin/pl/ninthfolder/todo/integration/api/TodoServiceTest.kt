@@ -123,8 +123,8 @@ class TodoServiceTest(
         assert(response.title == todo1.title)
 		assert(response.content == todo1.content)
 		assert(response.status == todo1.status)
-		assert(response.createdOn == todo1.createdOn)
-		assert(response.modifiedOn == todo1.modifiedOn)
+		assert(response.createdOn.toEpochMilli() == todo1.createdOn.toEpochMilli())
+		assert(response.modifiedOn.toEpochMilli() == todo1.modifiedOn.toEpochMilli())
 	}
 
 	@Test
@@ -158,8 +158,8 @@ class TodoServiceTest(
         assert(updatedTodo.title == "updated title")
 		assert(updatedTodo.content == "update")
 		assert(updatedTodo.status == IN_PROGRESS)
-		assert(updatedTodo.createdOn == todo.createdOn)
-		assert(updatedTodo.modifiedOn != todo.modifiedOn)
+		assert(updatedTodo.createdOn.toEpochMilli() == todo.createdOn.toEpochMilli())
+		assert(updatedTodo.modifiedOn.toEpochMilli() != todo.modifiedOn.toEpochMilli())
 	}
 
 	@Test

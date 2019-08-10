@@ -15,4 +15,5 @@ interface UserEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     fun saveUser(@RequestBody @Valid newUser: NewUser): ResponseEntity<User>
 
+
 }
