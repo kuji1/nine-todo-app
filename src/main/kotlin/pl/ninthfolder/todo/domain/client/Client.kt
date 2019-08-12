@@ -8,8 +8,8 @@ import org.springframework.security.oauth2.provider.ClientDetails
 class Client constructor(
         private val clientId: String,
         private val clientSecret: String,
-//        private val accessTokenValiditySeconds: Int,
-//        private val refreshTokenValiditySeconds: Int,
+        private val accessTokenValiditySeconds: Int,
+        private val refreshTokenValiditySeconds: Int,
         private val authorizedGrantTypes: MutableSet<String>,
         private val authorities: MutableCollection<GrantedAuthority>
 ) : ClientDetails {
@@ -20,9 +20,9 @@ class Client constructor(
 
     override fun getClientSecret(): String = clientSecret
 
-    override fun getAccessTokenValiditySeconds(): Int = 3600
+    override fun getAccessTokenValiditySeconds(): Int = accessTokenValiditySeconds
 
-    override fun getRefreshTokenValiditySeconds(): Int = 3600
+    override fun getRefreshTokenValiditySeconds(): Int = refreshTokenValiditySeconds
 
     override fun getAuthorizedGrantTypes(): MutableSet<String> = authorizedGrantTypes
 
