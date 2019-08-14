@@ -10,6 +10,7 @@ import pl.ninthfolder.todo.api.dto.NewUser
 import pl.ninthfolder.todo.domain.user.PasswordHasher
 import pl.ninthfolder.todo.domain.user.User
 import pl.ninthfolder.todo.domain.user.UserRepository
+import pl.ninthfolder.todo.infrastructure.persistance.exception.UserNotFoundException
 import java.net.URI
 
 @Service
@@ -29,6 +30,14 @@ class UserService(
         } catch (dke: DuplicateKeyException) { // TODO - throw exception in userRepository?
             throw ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Username/email already registered.", dke)
         }
-        return ResponseEntity.created(URI.create("/api/todos/${user.id}")).build()
+        return ResponseEntity.created(URI.create("/api/users/${user.id}")).build()
+    }
+
+    override fun getUser(userId: String): ResponseEntity<User> {
+        try {
+            return ResponseEntity.ok(userRepository.findById(userId))
+        } catch (unfe: UserNotFoundException) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.", unfe)
+        }
     }
 }

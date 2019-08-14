@@ -15,5 +15,8 @@ interface UserEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     fun saveUser(@RequestBody @Valid newUser: NewUser): ResponseEntity<User>
 
+    @GetMapping(produces = ["application/json"], path = ["/{userId}"])
+    @ResponseStatus(HttpStatus.OK)
+    fun getUser(@PathVariable userId: String): ResponseEntity<User>
 
 }
