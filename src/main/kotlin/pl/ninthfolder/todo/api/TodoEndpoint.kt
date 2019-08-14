@@ -2,6 +2,7 @@ package pl.ninthfolder.todo.api
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.ninthfolder.todo.api.dto.NewTodo
 import pl.ninthfolder.todo.api.dto.UpdatedTodo
@@ -14,6 +15,7 @@ interface TodoEndpoint {
     @GetMapping(produces = ["application/json"], path = ["/{todoId}"])
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
+//    @PreAuthorize("hasScope('ultimate')")
     fun getTodo(@PathVariable todoId: String): ResponseEntity<Todo>
 
     @GetMapping(produces = ["application/json"])
